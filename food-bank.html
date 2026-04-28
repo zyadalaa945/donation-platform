@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إحسان | بنك الطعام</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo"><i class="fas fa-hand-holding-heart"></i> منصة إحسان</div>
+      <ul class="nav-links">
+        <li><a href="index.html">🏠 الرئيسية</a></li>
+        <li><a href="about.html">📖 من نحن</a></li>
+      </ul>
+      <div class="menu-icon" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </nav>
+  </header>
+
+  <main class="donation-page">
+    <div class="sector-banner food-banner">
+      <i class="fas fa-utensils"></i>
+      <h1>🍲 بنك الطعام</h1>
+      <p>تبرعك يوفر وجبة دافئة لعائلة محتاجة</p>
+    </div>
+
+    <h2 class="page-title">اختر عدد الكراتين</h2>
+    
+    <div class="cards-grid">
+      <div class="donation-card">
+        <span>📦 كرتونة واحدة</span>
+        <strong>150 جنيه</strong>
+        <button onclick="openPaymentMethod(150, 'بنك الطعام - كرتونة واحدة')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>📦 2 كرتونة</span>
+        <strong>300 جنيه</strong>
+        <button onclick="openPaymentMethod(300, 'بنك الطعام - 2 كرتونة')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>📦 3 كراتين</span>
+        <strong>450 جنيه</strong>
+        <button onclick="openPaymentMethod(450, 'بنك الطعام - 3 كراتين')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>📦 5 كراتين</span>
+        <strong>750 جنيه</strong>
+        <button onclick="openPaymentMethod(750, 'بنك الطعام - 5 كراتين')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>📦 10 كراتين</span>
+        <strong>1500 جنيه</strong>
+        <button onclick="openPaymentMethod(1500, 'بنك الطعام - 10 كراتين')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+    </div>
+
+    <div class="custom-donation">
+      <h3>✨ تبرع بقيمة مخصصة</h3>
+      <input type="number" id="customAmount" placeholder="أدخل المبلغ بالجنيه">
+      <button onclick="openCustomPayment()">تبرع الآن</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 منصة إحسان - حيث تبدأ الخير</p>
+  </footer>
+
+  <!-- ===== نافذة اختيار طريقة الدفع ===== -->
+  <div id="paymentMethodModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fas fa-credit-card"></i>
+        <h3>اختر طريقة الدفع</h3>
+        <span class="close" onclick="closePaymentMethod()">&times;</span>
+      </div>
+      <div class="payment-options">
+        <div class="payment-option" onclick="showVisaForm()">
+          <i class="fab fa-cc-visa"></i>
+          <span>💳 فيزا / ماستركارد</span>
+        </div>
+        <div class="payment-option" onclick="showVodafoneForm()">
+          <i class="fas fa-mobile-alt"></i>
+          <span>📱 فودافون كاش</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== نافذة إدخال بيانات الفيزا ===== -->
+  <div id="visaModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fab fa-cc-visa"></i>
+        <h3>بيانات البطاقة</h3>
+        <span class="close" onclick="closeVisaForm()">&times;</span>
+      </div>
+      <div class="payment-form">
+        <label>رقم البطاقة (16 رقم)</label>
+        <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456">
+        
+        <div class="row">
+          <div class="col">
+            <label>تاريخ الانتهاء</label>
+            <input type="text" id="expiryDate" placeholder="MM/YY">
+          </div>
+          <div class="col">
+            <label>CVV</label>
+            <input type="password" id="cvv" maxlength="3" placeholder="123">
+          </div>
+        </div>
+        
+        <label>الاسم على البطاقة</label>
+        <input type="text" id="cardName" placeholder="كما هو مكتوب على البطاقة">
+        
+        <button onclick="processVisaPayment()" class="pay-btn">💸 تأكيد الدفع</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== نافذة إدخال بيانات فودافون كاش ===== -->
+  <div id="vodafoneModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>بيانات فودافون كاش</h3>
+        <span class="close" onclick="closeVodafoneForm()">&times;</span>
+      </div>
+      <div class="payment-form">
+        <label>رقم محفظة فودافون كاش (11 رقم)</label>
+        <input type="text" id="vodafoneNumber" maxlength="11" placeholder="010xxxxxxxx">
+        
+        <label>الرقم السري</label>
+        <input type="password" id="vodafonePin" maxlength="6" placeholder="••••••">
+        
+        <button onclick="processVodafonePayment()" class="pay-btn">💸 تأكيد الدفع</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== نافذة النتيجة (نجاح / فشل) ===== -->
+  <div id="resultModal" class="modal">
+    <div class="modal-content result-content">
+      <div id="resultIcon" class="result-icon">✅</div>
+      <h3 id="resultTitle">تم الدفع بنجاح</h3>
+      <p id="resultMessage">شكراً لتبرعك 💖</p>
+      <button onclick="closeResult()" class="close-result-btn">حسناً</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

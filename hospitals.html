@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إحسان | المستشفيات</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo"><i class="fas fa-hand-holding-heart"></i> منصة إحسان</div>
+      <ul class="nav-links">
+        <li><a href="index.html">🏠 الرئيسية</a></li>
+        <li><a href="about.html">📖 من نحن</a></li>
+      </ul>
+      <div class="menu-icon" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </nav>
+  </header>
+
+  <main class="donation-page">
+    <div class="sector-banner hospitals-banner">
+      <i class="fas fa-hospital-user"></i>
+      <h1>🏥 دعم المستشفيات</h1>
+      <p>تبرعك ينقذ حياة مريض</p>
+    </div>
+
+    <h2 class="page-title">اختر نوع الدعم الطبي</h2>
+    
+    <div class="cards-grid">
+      <div class="donation-card">
+        <span>🩺 كشف طبي</span>
+        <strong>500 جنيه</strong>
+        <button onclick="openPaymentMethod(500, 'المستشفيات - كشف طبي')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>💊 أدوية شهرية</span>
+        <strong>1000 جنيه</strong>
+        <button onclick="openPaymentMethod(1000, 'المستشفيات - أدوية شهرية')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>✂️ عملية بسيطة</span>
+        <strong>1500 جنيه</strong>
+        <button onclick="openPaymentMethod(1500, 'المستشفيات - عملية بسيطة')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>🩻 جهاز طبي</span>
+        <strong>3000 جنيه</strong>
+        <button onclick="openPaymentMethod(3000, 'المستشفيات - جهاز طبي')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>❤️ عملية قلب مفتوح</span>
+        <strong>5000 جنيه</strong>
+        <button onclick="openPaymentMethod(5000, 'المستشفيات - عملية قلب')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+
+      <div class="donation-card">
+        <span>🏨 عملية كبيرة (أورام)</span>
+        <strong>10000 جنيه</strong>
+        <button onclick="openPaymentMethod(10000, 'المستشفيات - عملية كبيرة')"><i class="fas fa-gift"></i> تبرع</button>
+      </div>
+    </div>
+
+    <div class="custom-donation">
+      <h3>✨ تبرع بقيمة مخصصة</h3>
+      <input type="number" id="customAmount" placeholder="أدخل المبلغ بالجنيه">
+      <button onclick="openCustomPayment('المستشفيات')">تبرع الآن</button>
+    </div>
+
+    <div class="info-box">
+      <i class="fas fa-info-circle"></i>
+      <p>تبرعك يذهب مباشرة لعلاج الحالات الحرجة وغير القادرة</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 منصة إحسان - حيث تبدأ الخير</p>
+  </footer>
+
+  <!-- نافذة اختيار طريقة الدفع -->
+  <div id="paymentMethodModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fas fa-credit-card"></i>
+        <h3>اختر طريقة الدفع</h3>
+        <span class="close" onclick="closePaymentMethod()">&times;</span>
+      </div>
+      <div class="payment-options">
+        <div class="payment-option" onclick="showVisaForm()">
+          <i class="fab fa-cc-visa"></i>
+          <span>💳 فيزا / ماستركارد</span>
+        </div>
+        <div class="payment-option" onclick="showVodafoneForm()">
+          <i class="fas fa-mobile-alt"></i>
+          <span>📱 فودافون كاش</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة بيانات الفيزا -->
+  <div id="visaModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fab fa-cc-visa"></i>
+        <h3>بيانات البطاقة</h3>
+        <span class="close" onclick="closeVisaForm()">&times;</span>
+      </div>
+      <div class="payment-form">
+        <label>رقم البطاقة (16 رقم)</label>
+        <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456">
+        <div class="row">
+          <div class="col">
+            <label>تاريخ الانتهاء</label>
+            <input type="text" id="expiryDate" placeholder="MM/YY">
+          </div>
+          <div class="col">
+            <label>CVV</label>
+            <input type="password" id="cvv" maxlength="3" placeholder="123">
+          </div>
+        </div>
+        <label>الاسم على البطاقة</label>
+        <input type="text" id="cardName" placeholder="كما هو مكتوب على البطاقة">
+        <button onclick="processVisaPayment()" class="pay-btn">💸 تأكيد الدفع</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة بيانات فودافون كاش -->
+  <div id="vodafoneModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>بيانات فودافون كاش</h3>
+        <span class="close" onclick="closeVodafoneForm()">&times;</span>
+      </div>
+      <div class="payment-form">
+        <label>رقم محفظة فودافون كاش (11 رقم)</label>
+        <input type="text" id="vodafoneNumber" maxlength="11" placeholder="010xxxxxxxx">
+        <label>الرقم السري</label>
+        <input type="password" id="vodafonePin" maxlength="6" placeholder="••••••">
+        <button onclick="processVodafonePayment()" class="pay-btn">💸 تأكيد الدفع</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة النتيجة -->
+  <div id="resultModal" class="modal">
+    <div class="modal-content result-content">
+      <div id="resultIcon" class="result-icon">✅</div>
+      <h3 id="resultTitle">تم الدفع بنجاح</h3>
+      <p id="resultMessage">شكراً لتبرعك 💖</p>
+      <button onclick="closeResult()" class="close-result-btn">حسناً</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
